@@ -36,6 +36,7 @@ class ElasticSearchMapping(object):
         'SmallIntegerField': 'integer',
         'TextField': 'string',
         'TimeField': 'date',
+        'RelatedFields': 'nested'
     }
 
     def __init__(self, model):
@@ -62,6 +63,12 @@ class ElasticSearchMapping(object):
         if 'es_extra' in field.kwargs:
             for key, value in field.kwargs['es_extra'].items():
                 mapping[key] = value
+
+        if mapping['type'] == 'nested':
+            mapping['properties'] = {}
+            for child_field in field.child_fields:
+                child_name, child_mapping = self.get_field_mapping(child_field)
+                mapping['properties'][child_name] = child_mapping
 
         return field.get_index_name(self.model), mapping
 
@@ -91,13 +98,11 @@ class ElasticSearchMapping(object):
         doc = dict(pk=str(obj.pk), content_type=self.model.indexed_get_content_type())
         partials = []
         for field in self.model.get_search_fields():
-            value = field.get_value(obj)
-
-            doc[field.get_index_name(self.model)] = value
+            doc.update(field.get_name_value_mapping(obj, self.model))
 
             # Check if this field should be added into _partials
             if isinstance(field, SearchField) and field.partial_match:
-                partials.append(value)
+                partials.append(field.get_value(obj))
 
         # Add partials to document
         doc['_partials'] = partials

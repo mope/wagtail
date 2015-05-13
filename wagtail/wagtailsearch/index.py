@@ -123,6 +123,9 @@ class BaseField(object):
                 value = value()
             return value
 
+    def get_name_value_mapping(self, obj, cls):
+        return {self.get_index_name(cls): self.get_value(obj)}
+
     def __repr__(self):
         return '<%s: %s>' % (self.__class__.__name__, self.field_name)
 
@@ -136,3 +139,21 @@ class SearchField(BaseField):
 
 class FilterField(BaseField):
     suffix = '_filter'
+
+
+class RelatedFields(BaseField):
+    def __init__(self, field_name, child_fields=[], **kwargs):
+        super(RelatedFields, self).__init__(field_name, **kwargs)
+        self.child_fields = [
+            child_field for child_field in child_fields if not
+            isinstance(child_field, self.__class__)
+        ]
+
+    def get_type(self, cls):
+        return 'RelatedFields'
+
+    def get_name_value_mapping(self, obj, cls):
+        child_mapping = []
+        for child_field in self.child_fields:
+            child_mapping.append(child_field.get_name_value_mapping(obj, cls))
+        return {self.get_index_name(cls): child_mapping}
