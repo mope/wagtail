@@ -12,11 +12,13 @@ from wagtail.wagtailcore.utils import cautious_slugify as _cautious_slugify
 from wagtail.wagtailadmin.menu import admin_menu
 
 from wagtail.utils.pagination import DEFAULT_PAGE_KEY
+from wagtail.wagtailadmin.link_choosers import registry
 
 
 register = template.Library()
 
 register.filter('intcomma', intcomma)
+
 
 @register.inclusion_tag('wagtailadmin/shared/explorer_nav.html')
 def explorer_nav():
@@ -40,6 +42,7 @@ def main_nav(context):
         'menu_html': admin_menu.render_html(request),
         'request': request,
     }
+
 
 @register.simple_tag
 def main_nav_js():
@@ -171,6 +174,7 @@ def render_with_errors(bound_field):
     else:
         return bound_field.as_widget()
 
+
 @register.filter
 def has_unrendered_errors(bound_field):
     """
@@ -258,4 +262,15 @@ def paginate(context, page, base_url='', page_key=DEFAULT_PAGE_KEY,
         'page': page,
         'page_key': page_key,
         'paginator': page.paginator,
+    }
+
+
+@register.inclusion_tag('wagtailadmin/chooser/_link_types.html',
+                        takes_context=True)
+def chooser_link_types(context, current):
+    return {
+        'request': context['request'],
+        'querystring': context.get('querystring', ''),
+        'current': current,
+        'link_types': registry,
     }

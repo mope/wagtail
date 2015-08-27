@@ -41,6 +41,10 @@ def filter_page_type(queryset, page_models):
     return qs
 
 
+def chooser(request):
+    pass
+
+
 def browse(request, parent_page_id=None):
     # Find parent page
     if parent_page_id:
@@ -150,6 +154,7 @@ def external_link(request):
                 request,
                 None, 'wagtailadmin/chooser/external_link_chosen.js',
                 {
+                    'type': 'external',
                     'url': form.cleaned_data['url'],
                     'link_text': form.cleaned_data['link_text'] if prompt_for_link_text else form.cleaned_data['url']
                 }
@@ -181,6 +186,7 @@ def email_link(request):
                 request,
                 None, 'wagtailadmin/chooser/external_link_chosen.js',
                 {
+                    'type': 'email',
                     'url': 'mailto:' + form.cleaned_data['email_address'],
                     'link_text': form.cleaned_data['link_text'] if (prompt_for_link_text and form.cleaned_data['link_text']) else form.cleaned_data['email_address']
                 }
