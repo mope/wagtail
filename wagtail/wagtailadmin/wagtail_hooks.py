@@ -3,7 +3,10 @@ from django.contrib.auth.models import Permission
 from django.utils.translation import ugettext_lazy as _
 
 from wagtail.wagtailcore import hooks
-from wagtail.wagtailadmin.menu import MenuItem, SubmenuMenuItem, settings_menu
+
+from .menu import MenuItem, SubmenuMenuItem, settings_menu
+from .link_choosers import (
+    InternalLinkChooser, ExternalLinkChooser, EmailLinkChooser)
 
 
 class ExplorerMenuItem(MenuItem):
@@ -30,3 +33,18 @@ def register_settings_menu():
 @hooks.register('register_permissions')
 def register_permissions():
     return Permission.objects.filter(content_type__app_label='wagtailadmin', codename='access_admin')
+
+
+@hooks.register('register_rich_text_link_chooser')
+def register_internal_link_chooser():
+    return InternalLinkChooser
+
+
+@hooks.register('register_rich_text_link_chooser')
+def register_external_link_chooser():
+    return ExternalLinkChooser
+
+
+@hooks.register('register_rich_text_link_chooser')
+def register_email_link_chooser():
+    return EmailLinkChooser

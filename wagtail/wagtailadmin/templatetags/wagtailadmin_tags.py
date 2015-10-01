@@ -11,10 +11,13 @@ from wagtail.wagtailcore.utils import camelcase_to_underscore, escape_script
 from wagtail.wagtailcore.utils import cautious_slugify as _cautious_slugify
 from wagtail.wagtailadmin.menu import admin_menu
 
+from wagtail.wagtailadmin.link_choosers import registry
+
 
 register = template.Library()
 
 register.filter('intcomma', intcomma)
+
 
 @register.inclusion_tag('wagtailadmin/shared/explorer_nav.html')
 def explorer_nav():
@@ -38,6 +41,7 @@ def main_nav(context):
         'menu_html': admin_menu.render_html(request),
         'request': request,
     }
+
 
 @register.simple_tag
 def main_nav_js():
@@ -74,6 +78,14 @@ def widgettype(bound_field):
             return camelcase_to_underscore(bound_field.widget.__class__.__name__)
         except AttributeError:
             return ""
+
+
+@register.filter
+def meta_description(model):
+    try:
+        return model.model_class()._meta.description
+    except:
+        return ""
 
 
 @register.assignment_tag(takes_context=True)
@@ -169,6 +181,7 @@ def render_with_errors(bound_field):
     else:
         return bound_field.as_widget()
 
+
 @register.filter
 def has_unrendered_errors(bound_field):
     """
@@ -182,3 +195,14 @@ def has_unrendered_errors(bound_field):
 @stringfilter
 def cautious_slugify(value):
     return _cautious_slugify(value)
+
+
+@register.inclusion_tag('wagtailadmin/chooser/_link_types.html',
+                        takes_context=True)
+def chooser_link_types(context, current):
+    return {
+        'request': context['request'],
+        'querystring': context.get('querystring', ''),
+        'current': current,
+        'link_types': registry,
+    }
