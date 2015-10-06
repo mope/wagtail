@@ -1,12 +1,11 @@
 from django.utils.html import escape
 
-from wagtail.wagtailadmin.link_choosers import LinkChooser
 from wagtail.wagtaildocs.models import Document
 
 from django.utils.translation import ugettext_lazy as _
 
 
-class DocumentLinkHandler(LinkChooser):
+class DocumentLinkHandler(object):
 
     id = 'document'
     title = _('Document')

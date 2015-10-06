@@ -1,6 +1,7 @@
 from __future__ import absolute_import, print_function, unicode_literals
 
 import bisect
+import operator
 
 from django.forms.utils import flatatt
 from django.utils.functional import cached_property
@@ -22,7 +23,8 @@ class LinkChooserRegistry(object):
     @cached_property
     def items(self):
         registered_hooks = hooks.get_hooks('register_rich_text_link_chooser')
-        return sorted({hook() for hook in registered_hooks})
+        return sorted({hook() for hook in registered_hooks},
+                      key=operator.attrgetter('priority'))
 
     def __iter__(self):
         return iter(self.items)
@@ -34,14 +36,7 @@ class LinkChooserRegistry(object):
 registry = LinkChooserRegistry()
 
 
-class LinkChooser(object):
-    def __cmp__(self, other):
-        if not isinstance(other, LinkChooser):
-            return NotImplemented
-        return cmp(self.priority, other.priority)
-
-
-class InternalLinkChooser(LinkChooser):
+class InternalLinkChooser(object):
     """
     PageLinkHandler will be invoked whenever we encounter an <a> element in
     HTML content with an attribute of data-linktype="page". The resulting
@@ -78,7 +73,7 @@ class InternalLinkChooser(LinkChooser):
             return "<a>"
 
 
-class SimpleLinkChooser(LinkChooser):
+class SimpleLinkChooser(object):
     @classmethod
     def get_db_attributes(cls, tag):
         return {'href': tag['href']}
