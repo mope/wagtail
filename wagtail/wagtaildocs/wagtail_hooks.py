@@ -1,7 +1,5 @@
-from django.conf import settings
 from django.conf.urls import include, url
 from django.core import urlresolvers
-from django.utils.html import format_html, format_html_join
 from django.utils.translation import ugettext_lazy as _
 from django.contrib.auth.models import Permission
 
@@ -33,7 +31,8 @@ def register_documents_menu_item():
 
 @hooks.register('register_permissions')
 def register_permissions():
-    return Permission.objects.filter(content_type__app_label='wagtaildocs',
+    return Permission.objects.filter(
+        content_type__app_label='wagtaildocs',
         codename__in=['add_document', 'change_document'])
 
 
