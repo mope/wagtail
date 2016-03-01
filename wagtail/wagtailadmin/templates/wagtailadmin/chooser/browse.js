@@ -59,6 +59,13 @@ function(modal) {
     to pass control back to the calling page */
     function ajaxifySearchResults() {
         $('.page-results a.choose-page', modal.body).click(choosePage);
+
+        /* pagination links within search results should be AJAX-fetched
+           and the result loaded into .page-results (and ajaxified) */
+        $('.page-results a.navigate-pages', modal.body).click(function() {
+            $('.page-results', modal.body).load(this.href, ajaxifySearchResults);
+            return false;
+        });
     }
 
     /* Set up behaviour of choose-page links, to pass control back to the calling page */
