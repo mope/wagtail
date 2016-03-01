@@ -3,14 +3,17 @@
 # This file is distributed under the same license as the PACKAGE package.
 #
 # Translators:
+# Hannes Lohmander <c.hannes.l@gmail.com>, 2015
 # Ludwig Kjellström <ludwig.kjellstrom@amnesty.se>, 2015
+# Thomas Kunambi <kunambi@gmail.com>, 2015
+# Thomas Kunambi <kunambi@gmail.com>, 2015
 msgid ""
 msgstr ""
 "Project-Id-Version: Wagtail\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-08-26 14:28+0100\n"
-"PO-Revision-Date: 2015-08-26 13:37+0000\n"
-"Last-Translator: Karl Hobley <karl@torchbox.com>\n"
+"POT-Creation-Date: 2015-12-17 13:54+0000\n"
+"PO-Revision-Date: 2015-12-17 14:01+0000\n"
+"Last-Translator: mattwestcott <matthew@torchbox.com>\n"
 "Language-Team: Swedish (http://www.transifex.com/torchbox/wagtail/language/"
 "sv/)\n"
 "MIME-Version: 1.0\n"
@@ -52,54 +55,34 @@ msgstr "Datum"
 msgid "Date/time"
 msgstr "Datum/tid"
 
-msgid "Submit time"
-msgstr "Mottaget"
-
-msgid "Form Submission"
-msgstr "Mottaget formulär"
-
-msgid "Label"
-msgstr "Fält-namn"
-
 msgid "The label of the form field"
 msgstr "Namn på fältet"
-
-msgid "Field type"
-msgstr "Fälttyp"
-
-msgid "Required"
-msgstr "Obligatoriskt"
-
-msgid "Choices"
-msgstr "Val"
 
 msgid ""
 "Comma separated list of choices. Only applicable in checkboxes, radio and "
 "dropdown."
 msgstr ""
 "Kommaseparerad lista med val. Används bara för kryssrutor, radioknappar och "
-"dropdowns."
-
-msgid "Default value"
-msgstr "Startvärde"
+"rullistor."
 
 msgid "Default value. Comma separated values supported for checkboxes."
 msgstr "Startvärde. Kommaseparerade värden för kryssrutor."
 
-msgid "Help text"
-msgstr "Stödtext"
-
-msgid "To address"
-msgstr "Mottagaradress"
-
 msgid "Optional - form submissions will be emailed to this address"
 msgstr "Valfritt - ifyllda formulär e-postas till denna adress"
 
-msgid "From address"
-msgstr "Avsändaradress"
+#, python-format
+msgid "Delete %(title)s"
+msgstr "Radera %(title)s"
 
-msgid "Subject"
-msgstr "Ämne"
+msgid "Delete"
+msgstr "Radera"
+
+msgid "Are you sure you want to delete this form submission?"
+msgstr "Är du säker på att du vill radera denna formulärinlaga?"
+
+msgid "Delete it"
+msgstr "Radera den"
 
 msgid "Forms"
 msgstr "Formulär"
@@ -134,5 +117,11 @@ msgstr "Källa"
 msgid "Submission Date"
 msgstr "Mottaget"
 
+msgid "Actions"
+msgstr "Handlingar"
+
 msgid "No form pages have been created."
 msgstr "Inga formulär har skapats."
+
+msgid "Submission deleted."
+msgstr "Inlaga raderad"

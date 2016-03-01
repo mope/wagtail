@@ -3,11 +3,16 @@
 # This file is distributed under the same license as the PACKAGE package.
 #
 # Translators:
+# Daniel Manser <me@danielmanser.com>, 2015
+# Ettore Atalan <atalanttore@googlemail.com>, 2015
 # Henrik Kröger <hedwig@riseup.net>, 2015
+# hpoul <herbert.transifex@m.poul.at>, 2015
 # Johannes Spielmann <j@spielmannsolutions.com>, 2014-2015
 # karlsander <karlsander@gmail.com>, 2014
 # karlsander <karlsander@gmail.com>, 2014
 # M0rph 3u5 <transifex@m0rph3u5.net>, 2014
+# mattwestcott <matthew@torchbox.com>, 2015
+# Max Pfeiffer <max.pfeiffer@alp-phone.ch>, 2015
 # pcraston <patrick@craston.com>, 2014
 # pcraston <patrick@craston.com>, 2014
 # Wasilis Mandratzis-Walz, 2015
@@ -15,9 +20,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Wagtail\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-08-26 14:28+0100\n"
-"PO-Revision-Date: 2015-09-03 15:17+0000\n"
-"Last-Translator: Henrik Kröger <hedwig@riseup.net>\n"
+"POT-Creation-Date: 2015-12-17 13:54+0000\n"
+"PO-Revision-Date: 2015-12-17 13:57+0000\n"
+"Last-Translator: mattwestcott <matthew@torchbox.com>\n"
 "Language-Team: German (http://www.transifex.com/torchbox/wagtail/language/"
 "de/)\n"
 "MIME-Version: 1.0\n"
@@ -30,7 +35,7 @@ msgid "Scheduled publishing"
 msgstr "Geplante Veröffentlichung"
 
 msgid "Common page configuration"
-msgstr "Allgemeine Seiten Konfiguration"
+msgstr "Allgemeine Seitenkonfiguration"
 
 msgid "Search"
 msgstr "Suche"
@@ -46,7 +51,7 @@ msgid "Enter your %s"
 msgstr "Bitte %s eingeben"
 
 msgid "Enter your email address to reset your password"
-msgstr "Geben Sie ihre Email-Adresse ein um ihr Passwort zurückzusetzen."
+msgstr "Geben Sie ihre Email-Adresse ein, um ihr Passwort zurückzusetzen."
 
 msgid "Please fill your email address."
 msgstr "Bitte geben Sie ihre Email-Adresse ein."
@@ -249,6 +254,27 @@ msgstr "Auswählen"
 msgid "Choose a page"
 msgstr "Seite auswählen"
 
+#, python-format
+msgid ""
+"\n"
+"                Only pages of type \"%(type)s\" may be chosen for this "
+"field. Search results will exclude pages of other types.\n"
+"                "
+msgid_plural ""
+"\n"
+"                Only the following page types may be chosen for this field: "
+"%(type)s. Search results will exclude pages of other types.\n"
+"            "
+msgstr[0] ""
+"\n"
+"Es können nur Seiten des Typs \"%(type)s\" für dieses Feld ausgewählt "
+"werden. Seiten anderer Typen werden nicht in den Suchergebnissen aufgeführt."
+msgstr[1] ""
+"\n"
+"Es können nur Seiten der folgenden Typen für dieses Feld ausgewählt werden: "
+"%(type)s. Seiten anderer Typen werden nicht in den Suchergebnissen "
+"aufgeführt."
+
 msgid "Add an email link"
 msgstr "Email-Link hinzufügen"
 
@@ -257,6 +283,12 @@ msgstr "Link einfügen"
 
 msgid "Add an external link"
 msgstr "Externen Link hinzufügen"
+
+msgid "Yes, delete"
+msgstr "Ja, Löschen"
+
+msgid "Save"
+msgstr "Speichern"
 
 #, python-format
 msgid "Welcome to the %(site_name)s Wagtail CMS"
@@ -378,10 +410,6 @@ msgstr "Sie können die Seite hier bearbeiten:"
 #, python-format
 msgid "The page \"%(page)s\" has been submitted for moderation"
 msgstr "Die Seite »%(page)s« wurde zur Freischaltung eingereicht"
-
-#, python-format
-msgid "The page \"%(page)s\" has been submitted for moderation."
-msgstr "Die Seite »%(page)s« wurde zur Freischaltung eingereicht."
 
 msgid "You can preview the page here:"
 msgstr "Sie können hier die Vorschau der Seite anzeigen:"
@@ -521,8 +549,8 @@ msgstr "%(page_type)s erstellen"
 msgid "New"
 msgstr "Neu"
 
-msgid "Save as draft"
-msgstr "Als Entwurf speichern"
+msgid "Save draft"
+msgstr "Entwurf speichern"
 
 msgid "Publish"
 msgstr "Veröffentlichen"
@@ -541,9 +569,6 @@ msgstr "Wird bearbeitet %(page_type)s <span>%(title)s</span>"
 msgid "Page locked"
 msgstr "Seite gesperrt"
 
-msgid "Save draft"
-msgstr "Entwurf speichern"
-
 #, python-format
 msgid "Last modified: %(last_mod)s"
 msgstr "Zuletzt geändert: %(last_mod)s"
@@ -561,6 +586,13 @@ msgstr "Ziehen"
 
 msgid "Updated"
 msgstr "Aktualisiert"
+
+msgid "No pages have been created at this location."
+msgstr "Es wurden keine Seiten an dieser Stelle angelegt."
+
+#, python-format
+msgid "Why not <a href=\"%(add_page_url)s\">create one</a>?"
+msgstr "Warum nicht <a href=\"%(add_page_url)s\">anlegen</a>?"
 
 msgid "This page is locked to further editing"
 msgstr "Diese Seite ist gesperrt für weiteres Bearbeiten"
@@ -593,6 +625,16 @@ msgstr ""
 msgid "Add child page"
 msgstr "Untergeordnete Seite hinzufügen"
 
+#, python-format
+msgid ""
+"\n"
+"        Page %(page_number)s of %(num_pages)s.\n"
+"    "
+msgstr ""
+"\n"
+"        Seite %(page_number)s von %(num_pages)s.\n"
+"    "
+
 msgid "Previous"
 msgstr "Vorherige"
 
@@ -619,17 +661,23 @@ msgstr "Wählen Sie eine neue übergeordnete Seite für %(title)s"
 msgid "Select a new parent page for <span>%(title)s</span>"
 msgstr "Wählen Sie eine neue übergeordnete Seite für <span>%(title)s</span>"
 
-msgid "Other searches"
-msgstr "Andere Suchbegriffe"
-
-msgid "Images"
-msgstr "Bilder"
-
-msgid "Documents"
-msgstr "Dokumente"
-
-msgid "Users"
-msgstr "Benutzer"
+#, python-format
+msgid ""
+"\n"
+"                There is one matching page\n"
+"            "
+msgid_plural ""
+"\n"
+"                There are %(counter)s matching pages\n"
+"            "
+msgstr[0] ""
+"\n"
+"                Es gibt eine passende Seite\n"
+"            "
+msgstr[1] ""
+"\n"
+"                Es gibt %(counter)s passende Seiten\n"
+"            "
 
 #, python-format
 msgid "Sorry, no pages match <em>\"%(query_string)s\"</em>"
@@ -718,6 +766,9 @@ msgstr "Abmelden"
 msgid "Page %(page_num)s of %(total_pages)s."
 msgstr "Seite %(page_num)s von %(total_pages)s."
 
+msgid "Other searches"
+msgstr "Andere Suchbegriffe"
+
 msgid ""
 "You are using an <strong>outdated</strong> browser not supported by this "
 "software. Please <a href=\"http://browsehappy.com/\">upgrade your browser</"
@@ -743,6 +794,9 @@ msgstr "Unterseite hinzufügen"
 
 msgid "Add"
 msgstr "Hinzufügen"
+
+msgid "Sorry, you do not have permission to access this area."
+msgstr "Sie haben leider keinen Zugang zu diesem Bereich."
 
 msgid "Your password has been changed successfully!"
 msgstr "Ihr Passwort wurde erfolgreich geändert."
@@ -827,7 +881,7 @@ msgid "Content"
 msgstr "Inhalt"
 
 msgid "Promote"
-msgstr "Förderung"
+msgstr "Veröffentlichung"
 
 msgid "Settings"
 msgstr "Einstellungen"

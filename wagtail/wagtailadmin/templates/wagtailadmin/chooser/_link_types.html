@@ -1,10 +1,12 @@
+{% load wagtailadmin_tags %}
+
 {% if link_types|length > 1 %}
 <p class="link-types">
     {% for link_type in link_types %}
         {% if current == link_type.id %}
             <b>{{ link_type.title }}</b>
         {% else %}
-            <a data-link-type="{{ link_type.id }}" href="{% url link_type.url_name %}?{{ querystring }}">{{ link_type.title }}</a>
+            <a data-link-type="{{ link_type.id }}" href="{% url link_type.url_name %}{% querystring p=None %}">{{ link_type.title }}</a>
         {% endif %}
 
         {% if not forloop.last %}|{% endif %}

@@ -99,6 +99,38 @@ class TestImageQuerySet(TestCase):
         results = Image.objects.search("Test")
         self.assertEqual(list(results), [image])
 
+    def test_operators(self):
+        aaa_image = Image.objects.create(
+            title="AAA Test image",
+            file=get_test_image_file(),
+        )
+        zzz_image = Image.objects.create(
+            title="ZZZ Test image",
+            file=get_test_image_file(),
+        )
+
+        results = Image.objects.search("aaa test", operator='and')
+        self.assertEqual(list(results), [aaa_image])
+
+        results = Image.objects.search("aaa test", operator='or')
+        sorted_results = sorted(results, key=lambda img: img.title)
+        self.assertEqual(sorted_results, [aaa_image, zzz_image])
+
+    def test_custom_ordering(self):
+        aaa_image = Image.objects.create(
+            title="AAA Test image",
+            file=get_test_image_file(),
+        )
+        zzz_image = Image.objects.create(
+            title="ZZZ Test image",
+            file=get_test_image_file(),
+        )
+
+        results = Image.objects.order_by('title').search("Test")
+        self.assertEqual(list(results), [aaa_image, zzz_image])
+        results = Image.objects.order_by('-title').search("Test")
+        self.assertEqual(list(results), [zzz_image, aaa_image])
+
 
 class TestImagePermissions(TestCase):
     def setUp(self):
@@ -108,7 +140,9 @@ class TestImagePermissions(TestCase):
         self.owner = User.objects.create_user(username='owner', email='owner@email.com', password='password')
         self.editor = User.objects.create_user(username='editor', email='editor@email.com', password='password')
         self.editor.groups.add(Group.objects.get(name='Editors'))
-        self.administrator = User.objects.create_superuser(username='administrator', email='administrator@email.com', password='password')
+        self.administrator = User.objects.create_superuser(
+            username='administrator', email='administrator@email.com', password='password'
+        )
 
         # Owner user must have the add_image permission
         self.owner.user_permissions.add(Permission.objects.get(codename='add_image'))
@@ -158,7 +192,6 @@ class TestRenditions(TestCase):
         self.assertEqual(rendition.width, 100)
         self.assertEqual(rendition.height, 75)
 
-
     def test_resize_to_min(self):
         rendition = self.image.get_rendition('min-120x120')
 
@@ -180,6 +213,10 @@ class TestRenditions(TestCase):
 
         # Check that they are the same object
         self.assertEqual(first_rendition, second_rendition)
+
+    def test_alt_attribute(self):
+        rendition = self.image.get_rendition('width-400')
+        self.assertEqual(rendition.alt, "Test image")
 
 
 class TestUsageCount(TestCase):
@@ -252,7 +289,7 @@ class TestGetWillowImage(TestCase):
         # should raise a SourceImageIOError
         with self.assertRaises(SourceImageIOError):
             with bad_image.get_willow_image():
-                self.fail() # Shouldn't get here
+                self.fail()  # Shouldn't get here
 
     def test_closes_image(self):
         # This tests that willow closes images after use
@@ -293,7 +330,9 @@ class TestIssue573(TestCase):
         # Create an image with a big filename and focal point
         image = Image.objects.create(
             title="Test image",
-            file=get_test_image_file('thisisaverylongfilename-abcdefghijklmnopqrstuvwxyz-supercalifragilisticexpialidocious.png'),
+            file=get_test_image_file(
+                'thisisaverylongfilename-abcdefghijklmnopqrstuvwxyz-supercalifragilisticexpialidocious.png'
+            ),
             focal_point_x=1000,
             focal_point_y=1000,
             focal_point_width=1000,

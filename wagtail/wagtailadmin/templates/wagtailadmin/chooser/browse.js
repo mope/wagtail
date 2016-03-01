@@ -61,7 +61,7 @@ function(modal) {
         $('.page-results a.choose-page', modal.body).click(choosePage);
 
         /* pagination links within search results should be AJAX-fetched
-           and the result loaded into .page-results (and ajaxified) */
+        and the result loaded into .page-results (and ajaxified) */
         $('.page-results a.navigate-pages', modal.body).click(function() {
             $('.page-results', modal.body).load(this.href, ajaxifySearchResults);
             return false;

@@ -1,15 +1,18 @@
-from __future__ import unicode_literals  # ensure that RichText.__str__ returns unicode
+from __future__ import unicode_literals
 
 import re  # parsing HTML with regexes LIKE A BOSS.
+import warnings
 
+from django.forms.utils import flatatt
 from django.utils.encoding import python_2_unicode_compatible
+from django.utils.lru_cache import lru_cache
 from django.utils.safestring import mark_safe
 from django.utils.lru_cache import lru_cache
 
-from wagtail.wagtailcore.whitelist import Whitelister
-from wagtail.wagtailcore import hooks
+from wagtail.utils.deprecation import RemovedInWagtail16Warning
 from wagtail.wagtailadmin.link_choosers import registry as link_chooser_registry
-
+from wagtail.wagtailcore import hooks
+from wagtail.wagtailcore.whitelist import Whitelister
 
 # Define a set of 'embed handlers' and 'link handlers'. These handle the translation
 # of 'special' HTML elements in rich text - ones which we do not want to include
@@ -35,13 +38,30 @@ def get_embed_handler(embed_type):
     return EMBED_HANDLERS[embed_type]
 
 
+# RemovedInWagtail16Warning: This whole function
 @lru_cache()
-def get_link_handlers():
+def get_old_link_handlers():
+    handlers = []
+    for hook in hooks.get_hooks('register_rich_text_link_handler'):
+        message = '%s.%s: "register_rich_text_link_handler" is deprecated. Use "register_link_chooser"' % (
+            hook.__module__, hook.__name__)
+        warnings.warn(message, RemovedInWagtail16Warning)
+        handlers.append(hook())
+    return dict(handlers)
+
+
+# RemovedInWagtail16Warning: This whole function
+def get_old_link_handler(link_type):
+    return get_old_link_handlers()[link_type]
+
+
+@lru_cache()
+def get_link_choosers():
     return {handler.id: handler for handler in link_chooser_registry}
 
 
-def get_link_handler(link_type):
-    return get_link_handlers()[link_type]
+def get_link_chooser(link_type):
+    return get_link_choosers()[link_type]
 
 
 class DbWhitelister(Whitelister):
@@ -89,7 +109,13 @@ class DbWhitelister(Whitelister):
                 cls.clean_node(doc, child)
 
             link_type = tag['data-linktype']
-            link_handler = get_link_handler(link_type)
+            try:
+                link_handler = get_link_chooser(link_type)
+            except KeyError:
+                try:
+                    link_handler = get_old_link_handler(link_type)
+                except KeyError:
+                    raise ValueError('Unknown link chooser "{}"'.format(link_type))
             link_attrs = link_handler.get_db_attributes(tag)
             link_attrs['linktype'] = link_type
             tag.attrs.clear()
@@ -126,8 +152,25 @@ def expand_db_html(html, for_editor=False):
         if 'linktype' not in attrs:
             # return unchanged
             return m.group(0)
-        handler = get_link_handler(attrs['linktype'])
-        return handler.expand_db_attributes(attrs, for_editor)
+        try:
+            handler = get_link_chooser(attrs['linktype'])
+        except KeyError:
+            pass
+        else:
+            attrs = handler.expand_db_attributes(attrs, for_editor)
+            if for_editor:
+                attrs['data-linktype'] = handler.id
+            return '<a{}>'.format(flatatt(attrs))
+
+        # RemovedInWagtail16Warning: old-style link handlers will be removed
+        try:
+            handler = get_old_link_handler(attrs['linktype'])
+        except KeyError:
+            pass
+        else:
+            return handler.expand_db_attributes(attrs, for_editor)
+
+        raise ValueError('Unknown link chooser "{}"'.format(attrs['linktype']))
 
     def replace_embed_tag(m):
         attrs = extract_attrs(m.group(1))

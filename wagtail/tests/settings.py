@@ -1,8 +1,5 @@
 import os
 
-import django
-from django.conf import global_settings
-
 
 WAGTAIL_ROOT = os.path.dirname(__file__)
 STATIC_ROOT = os.path.join(WAGTAIL_ROOT, 'test-static')
@@ -34,45 +31,39 @@ STATIC_ROOT = STATIC_ROOT
 
 STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
-    'compressor.finders.CompressorFinder',
 )
 
 USE_TZ = True
 
-if django.VERSION >= (1, 8):
-    TEMPLATES = [
-        {
-            'BACKEND': 'django.template.backends.django.DjangoTemplates',
-            'DIRS': [],
-            'APP_DIRS': True,
-            'OPTIONS': {
-                'context_processors': [
-                    'django.template.context_processors.debug',
-                    'django.template.context_processors.request',
-                    'django.contrib.auth.context_processors.auth',
-                    'django.contrib.messages.context_processors.messages',
-                    'django.template.context_processors.request',
-                    'wagtail.tests.context_processors.do_not_use_static_url',
-                ],
-            },
+TEMPLATES = [
+    {
+        'BACKEND': 'django.template.backends.django.DjangoTemplates',
+        'DIRS': [],
+        'APP_DIRS': True,
+        'OPTIONS': {
+            'context_processors': [
+                'django.template.context_processors.debug',
+                'django.template.context_processors.request',
+                'django.contrib.auth.context_processors.auth',
+                'django.contrib.messages.context_processors.messages',
+                'django.template.context_processors.request',
+                'wagtail.tests.context_processors.do_not_use_static_url',
+                'wagtail.contrib.settings.context_processors.settings',
+            ],
         },
-        {
-            'BACKEND': 'django.template.backends.jinja2.Jinja2',
-            'APP_DIRS': True,
-            'OPTIONS': {
-                'extensions': [
-                    'wagtail.wagtailcore.templatetags.jinja2.core',
-                    'wagtail.wagtailadmin.templatetags.jinja2.userbar',
-                    'wagtail.wagtailimages.templatetags.jinja2.images',
-                ],
-            },
+    },
+    {
+        'BACKEND': 'django.template.backends.jinja2.Jinja2',
+        'APP_DIRS': True,
+        'OPTIONS': {
+            'extensions': [
+                'wagtail.wagtailcore.jinja2tags.core',
+                'wagtail.wagtailadmin.jinja2tags.userbar',
+                'wagtail.wagtailimages.jinja2tags.images',
+            ],
         },
-    ]
-else:
-    TEMPLATE_CONTEXT_PROCESSORS = global_settings.TEMPLATE_CONTEXT_PROCESSORS + (
-        'django.core.context_processors.request',
-        'wagtail.tests.context_processors.do_not_use_static_url',
-    )
+    },
+]
 
 MIDDLEWARE_CLASSES = (
     'django.middleware.common.CommonMiddleware',
@@ -106,6 +97,7 @@ INSTALLED_APPS = (
     'wagtail.contrib.wagtailfrontendcache',
     'wagtail.contrib.wagtailapi',
     'wagtail.contrib.wagtailsearchpromotions',
+    'wagtail.contrib.settings',
     'wagtail.wagtailforms',
     'wagtail.wagtailsearch',
     'wagtail.wagtailembeds',
@@ -118,7 +110,7 @@ INSTALLED_APPS = (
     'wagtail.wagtailcore',
 
     'taggit',
-    'compressor',
+    'rest_framework',
 
     'django.contrib.admin',
     'django.contrib.auth',
@@ -154,23 +146,14 @@ WAGTAILSEARCH_BACKENDS = {
 
 AUTH_USER_MODEL = 'customuser.CustomUser'
 
-try:
-    # Only add Elasticsearch backend if the elasticsearch-py library is installed
-    import elasticsearch  # noqa
-
-    # Import succeeded, add an Elasticsearch backend
+if 'ELASTICSEARCH_URL' in os.environ:
     WAGTAILSEARCH_BACKENDS['elasticsearch'] = {
         'BACKEND': 'wagtail.wagtailsearch.backends.elasticsearch',
+        'URLS': [os.environ['ELASTICSEARCH_URL']],
         'TIMEOUT': 10,
         'max_retries': 1,
         'AUTO_UPDATE': False,
     }
-
-    if 'ELASTICSEARCH_URL' in os.environ:
-        WAGTAILSEARCH_BACKENDS['elasticsearch']['URLS'] = [os.environ['ELASTICSEARCH_URL']]
-
-except ImportError:
-    pass
 
 
 WAGTAIL_SITE_NAME = "Test Site"

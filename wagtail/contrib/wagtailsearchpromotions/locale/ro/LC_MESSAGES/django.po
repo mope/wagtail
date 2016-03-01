@@ -8,9 +8,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Wagtail\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-08-26 14:46+0100\n"
-"PO-Revision-Date: 2015-08-26 14:14+0000\n"
-"Last-Translator: Karl Hobley <karl@torchbox.com>\n"
+"POT-Creation-Date: 2015-12-17 13:54+0000\n"
+"PO-Revision-Date: 2015-12-17 14:02+0000\n"
+"Last-Translator: mattwestcott <matthew@torchbox.com>\n"
 "Language-Team: Romanian (http://www.transifex.com/torchbox/wagtail/language/"
 "ro/)\n"
 "MIME-Version: 1.0\n"
@@ -108,9 +108,6 @@ msgstr "Rezultate promovate"
 msgid "Views (past week)"
 msgstr "Vizualizări (ultima săptămână)"
 
-msgid "Edit this pick"
-msgstr "Editează selecția"
-
 msgid "None"
 msgstr "Nici una"
 
@@ -142,6 +139,9 @@ msgstr ""
 #, python-brace-format
 msgid "Editor's picks for '{0}' created."
 msgstr "Selecțiile editoriale pentru '{0}' au fost create."
+
+msgid "Edit"
+msgstr "Editează"
 
 msgid "Recommendations have not been created due to errors"
 msgstr "Recomandările nu au fost create din cauza erorilor."

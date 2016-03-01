@@ -5,7 +5,7 @@
 <div class="nice-padding">
     {% chooser_link_types current='email' %}
 
-    <form action="{% url 'wagtailadmin_choose_page_email_link' %}?{% querystring %}" method="post">
+    <form action="{% url 'wagtailadmin_choose_page_email_link' %}{% querystring %}" method="post">
         {% csrf_token %}
         <ul class="fields">
             {% for field in form %}

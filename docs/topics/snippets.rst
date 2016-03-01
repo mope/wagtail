@@ -83,6 +83,10 @@ Then in your own page templates, you can include your snippet template tag with:
 
 .. code-block:: html+django
 
+  {% load wagtailcore_tags demo_tags %}
+
+  ...
+
   {% block content %}
   
     ...
@@ -110,14 +114,13 @@ In the above example, the list of adverts is a fixed list, displayed as part of 
           related_name='+'
       )
   
-  
-  BookPage.content_panels = [
-      SnippetChooserPanel('advert'),
-      # ...
-  ]
+      content_panels = Page.content_panels + [
+          SnippetChooserPanel('advert'),
+          # ...
+      ]
 
 
-The snippet could then be accessed within your template as ``self.advert``.
+The snippet could then be accessed within your template as ``page.advert``.
 
 To attach multiple adverts to a page, the ``SnippetChooserPanel`` can be placed on an inline child object of ``BookPage``, rather than on ``BookPage`` itself. Here this child model is named ``BookPageAdvertPlacement`` (so called because there is one such object for each time that an advert is placed on a BookPage):
 
@@ -126,7 +129,7 @@ To attach multiple adverts to a page, the ``SnippetChooserPanel`` can be placed 
 
   from django.db import models
 
-  from wagtail.wagtailcore.models import Page
+  from wagtail.wagtailcore.models import Page, Orderable
   from wagtail.wagtailsnippets.edit_handlers import SnippetChooserPanel
 
   from modelcluster.fields import ParentalKey
@@ -138,8 +141,8 @@ To attach multiple adverts to a page, the ``SnippetChooserPanel`` can be placed 
       advert = models.ForeignKey('demo.Advert', related_name='+')
   
       class Meta:
-          verbose_name = "Advert Placement"
-          verbose_name_plural = "Advert Placements"
+          verbose_name = "advert placement"
+          verbose_name_plural = "advert placements"
   
       panels = [
           SnippetChooserPanel('advert'),
@@ -152,11 +155,10 @@ To attach multiple adverts to a page, the ``SnippetChooserPanel`` can be placed 
   class BookPage(Page):
       ...
   
-  
-  BookPage.content_panels = [
-      InlinePanel('advert_placements', label="Adverts"),
-      # ...
-  ]
+      content_panels = Page.content_panels + [
+          InlinePanel('advert_placements', label="Adverts"),
+          # ...
+      ]
 
 
 
@@ -164,7 +166,7 @@ These child objects are now accessible through the page's ``advert_placements`` 
 
 .. code-block:: html+django
 
-  {% for advert_placement in self.advert_placements.all %}
+  {% for advert_placement in page.advert_placements.all %}
     <p><a href="{{ advert_placement.advert.url }}">{{ advert_placement.advert.text }}</a></p>
   {% endfor %}
 

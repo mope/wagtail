@@ -1,17 +1,19 @@
-from django.core import urlresolvers
 from django.contrib.auth.models import Permission
+from django.core import urlresolvers
 from django.utils.translation import ugettext_lazy as _
+from django.contrib.staticfiles.templatetags.staticfiles import static
 
+from wagtail.wagtailadmin.menu import MenuItem, SubmenuMenuItem, settings_menu
+from wagtail.wagtailadmin.search import SearchArea
 from wagtail.wagtailcore import hooks
 
-from .menu import MenuItem, SubmenuMenuItem, settings_menu
 from .link_choosers import (
-    InternalLinkChooser, ExternalLinkChooser, EmailLinkChooser)
+    EmailLinkChooser, ExternalLinkChooser, InternalLinkChooser)
 
 
 class ExplorerMenuItem(MenuItem):
     class Media:
-        js = ['wagtailadmin/js/explorer-menu.js']
+        js = [static('wagtailadmin/js/explorer-menu.js')]
 
 
 @hooks.register('register_admin_menu_item')
@@ -35,16 +37,25 @@ def register_permissions():
     return Permission.objects.filter(content_type__app_label='wagtailadmin', codename='access_admin')
 
 
-@hooks.register('register_rich_text_link_chooser')
+@hooks.register('register_admin_search_area')
+def register_pages_search_area():
+    return SearchArea(
+        _('Pages'), urlresolvers.reverse('wagtailadmin_pages:search'),
+        name='pages',
+        classnames='icon icon-folder-open-inverse',
+        order=100)
+
+
+@hooks.register('register_link_chooser')
 def register_internal_link_chooser():
     return InternalLinkChooser()
 
 
-@hooks.register('register_rich_text_link_chooser')
+@hooks.register('register_link_chooser')
 def register_external_link_chooser():
     return ExternalLinkChooser()
 
 
-@hooks.register('register_rich_text_link_chooser')
+@hooks.register('register_link_chooser')
 def register_email_link_chooser():
     return EmailLinkChooser()

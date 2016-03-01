@@ -1,6 +1,9 @@
 Your first Wagtail site
 =======================
 
+.. note::
+   This tutorial covers setting up a brand new Wagtail project. If you'd like to add Wagtail to an existing Django project instead, see :doc:`integrating_into_django`.
+
 1. Install Wagtail and its dependencies::
 
     pip install wagtail
@@ -72,7 +75,7 @@ Edit ``home/models.py`` as follows, to add a ``body`` field to the model:
 
 ``body`` is defined as ``RichTextField``, a special Wagtail field. You
 can use any of the `Django core fields <https://docs.djangoproject.com/en/1.8/ref/models/fields/>`__. ``content_panels`` define the
-capabilities and the layout of the editing interface. :doc:`More on creating Page models. <../topics/creating_pages>`
+capabilities and the layout of the editing interface. :doc:`More on creating Page models. <../topics/pages>`
 
 Run ``python manage.py makemigrations``, then
 ``python manage.py migrate`` to update the database with your model
@@ -97,7 +100,7 @@ home\_page.html). Edit
     {% block body_class %}template-homepage{% endblock %}
 
     {% block content %}
-        {{ self.body|richtext }}
+        {{ page.body|richtext }}
     {% endblock %}
 
 .. figure:: ../_static/images/tutorial/tutorial_3.png
@@ -118,7 +121,7 @@ of a ``RichTextField``:
 .. code-block:: html+django
 
     {% load wagtailcore_tags %}
-    {{ self.body|richtext }}
+    {{ page.body|richtext }}
 
 Produces:
 
@@ -182,12 +185,12 @@ Create a template at ``blog/templates/blog/blog_page.html``:
     {% block body_class %}template-blogpage{% endblock %}
 
     {% block content %}
-        <h1>{{ self.title }}</h1>
-        <p class="meta">{{ self.date }}</p>
+        <h1>{{ page.title }}</h1>
+        <p class="meta">{{ page.date }}</p>
 
-        <div class="intro">{{ self.intro }}</div>
+        <div class="intro">{{ page.intro }}</div>
 
-        {{ self.body|richtext }}
+        {{ page.body|richtext }}
     {% endblock %}
 
 Run ``python manage.py makemigrations`` and ``python manage.py migrate``.
@@ -252,23 +255,23 @@ Adjust your blog page template to include the image:
     {% block body_class %}template-blogpage{% endblock %}
 
     {% block content %}
-        <h1>{{ self.title }}</h1>
-        <p class="meta">{{ self.date }}</p>
+        <h1>{{ page.title }}</h1>
+        <p class="meta">{{ page.date }}</p>
 
-        {% if self.main_image %}
-          {% image self.main_image width-400 %}
+        {% if page.main_image %}
+          {% image page.main_image width-400 %}
         {% endif %}
 
-        <div class="intro">{{ self.intro }}</div>
+        <div class="intro">{{ page.intro }}</div>
 
-        {{ self.body|richtext }}
+        {{ page.body|richtext }}
     {% endblock %}
 
 .. figure:: ../_static/images/tutorial/tutorial_6.png
    :alt: A blog post sample
 
 You can read more about using images in templates in the
-:doc:`docs <../topics/images/index>`.
+:doc:`docs <../topics/images>`.
 
 Blog Index
 ~~~~~~~~~~
@@ -297,9 +300,9 @@ The above creates an index type to collect all our blog posts.
     {% block body_class %}template-blogindexpage{% endblock %}
 
     {% block content %}
-        <h1>{{ self.title }}</h1>
+        <h1>{{ page.title }}</h1>
 
-        <div class="intro">{{ self.intro|richtext }}</div>
+        <div class="intro">{{ page.intro|richtext }}</div>
     {% endblock %}
 
 Related items
@@ -364,10 +367,6 @@ can be BlogPages or external links. Change ``blog/models.py`` to
             abstract = True
 
 
-    class BlogIndexRelatedLink(Orderable, RelatedLink):
-        page = ParentalKey('BlogIndexPage', related_name='related_links')
-
-
     class BlogIndexPage(Page):
         intro = RichTextField(blank=True)
 
@@ -375,6 +374,10 @@ can be BlogPages or external links. Change ``blog/models.py`` to
             FieldPanel('intro', classname="full"),
             InlinePanel('related_links', label="Related links"),
         ]
+
+
+    class BlogIndexRelatedLink(Orderable, RelatedLink):
+        page = ParentalKey('BlogIndexPage', related_name='related_links')
 
 .. figure:: ../_static/images/tutorial/tutorial_7.png
    :alt: Blog index edit screen
@@ -390,13 +393,13 @@ Extend ``blog_index_page.html`` to show related items
     {% block body_class %}template-blogindexpage{% endblock %}
 
     {% block content %}
-        <h1>{{ self.title }}</h1>
+        <h1>{{ page.title }}</h1>
 
-        <div class="intro">{{ self.intro|richtext }}</div>
+        <div class="intro">{{ page.intro|richtext }}</div>
 
-        {% if self.related_links.all %}
+        {% if page.related_links.all %}
             <ul>
-                {% for item in self.related_links.all %}
+                {% for item in page.related_links.all %}
                     <li><a href="{{ item.link }}">{{ item.title }}</a></li>
                 {% endfor %}
             </ul>

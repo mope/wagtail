@@ -5,6 +5,7 @@
 # Translators:
 # Johannes Spielmann <j@spielmannsolutions.com>, 2014-2015
 # M0rph 3u5 <transifex@m0rph3u5.net>, 2014
+# Max Pfeiffer <max.pfeiffer@alp-phone.ch>, 2015
 # pcraston <patrick@craston.com>, 2014
 # pcraston <patrick@craston.com>, 2014
 # Tammo van Lessen <tvanlessen@gmail.com>, 2015
@@ -13,9 +14,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Wagtail\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-08-26 14:28+0100\n"
-"PO-Revision-Date: 2015-08-26 13:37+0000\n"
-"Last-Translator: Karl Hobley <karl@torchbox.com>\n"
+"POT-Creation-Date: 2015-12-17 13:54+0000\n"
+"PO-Revision-Date: 2015-12-17 13:59+0000\n"
+"Last-Translator: mattwestcott <matthew@torchbox.com>\n"
 "Language-Team: German (http://www.transifex.com/torchbox/wagtail/language/"
 "de/)\n"
 "MIME-Version: 1.0\n"
@@ -47,6 +48,14 @@ msgstr "Nicht unterstütztes Bildformat. Unterstützte Bildformate: %s."
 msgid "Not a valid %s image."
 msgstr "Kein gültiges %s Bild."
 
+#, python-format
+msgid "This file is too big (%%s). Maximum filesize %s."
+msgstr "Die Datei ist zu groß (%%s). Maximum Dateigröße %s."
+
+#, python-format
+msgid "This file is too big. Maximum filesize %s."
+msgstr "Die Datei ist zu groß. Maximum Dateigröße %s."
+
 msgid "Filter"
 msgstr "Filter"
 
@@ -76,21 +85,6 @@ msgstr "Höhe"
 
 msgid "Closeness"
 msgstr "Nähe"
-
-msgid "Title"
-msgstr "Titel"
-
-msgid "File"
-msgstr "Datei"
-
-msgid "Created at"
-msgstr "Erstellt am"
-
-msgid "Uploaded by user"
-msgstr "Hochgeladen von Benutzer"
-
-msgid "Tags"
-msgstr "Schlagwörter"
 
 msgid "Choose an image"
 msgstr "Bild auswählen"
@@ -238,6 +232,9 @@ msgstr "Benutzung von %(title)s"
 
 msgid "Usage of"
 msgstr "Benutzung von"
+
+msgid "Title"
+msgstr "Titel"
 
 msgid "Parent"
 msgstr "Übergeordnet"

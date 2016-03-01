@@ -1,8 +1,13 @@
+from __future__ import absolute_import, unicode_literals
+
+from django.forms.utils import flatatt
 from django.http import HttpResponse
 
-from wagtail.wagtailcore import hooks
-from wagtail.wagtailcore.whitelist import attribute_rule, check_url, allow_without_attributes
 from wagtail.wagtailadmin.menu import MenuItem
+from wagtail.wagtailadmin.search import SearchArea
+from wagtail.wagtailcore import hooks
+from wagtail.wagtailcore.whitelist import (
+    allow_without_attributes, attribute_rule, check_url)
 
 
 # Register one hook using decorators...
@@ -35,6 +40,54 @@ class KittensMenuItem(MenuItem):
     def is_shown(self, request):
         return not request.GET.get('hide-kittens', False)
 
+
 @hooks.register('register_admin_menu_item')
 def register_kittens_menu_item():
-    return KittensMenuItem('Kittens!', 'http://www.tomroyal.com/teaandkittens/', classnames='icon icon-kitten', attrs={'data-fluffy': 'yes'}, order=10000)
+    return KittensMenuItem(
+        'Kittens!',
+        'http://www.tomroyal.com/teaandkittens/',
+        classnames='icon icon-kitten',
+        attrs={'data-fluffy': 'yes'},
+        order=10000
+    )
+
+
+# Admin Other Searches hook
+class MyCustomSearchArea(SearchArea):
+    def is_shown(self, request):
+        return not request.GET.get('hide-option', False)
+
+    def is_active(self, request, current=None):
+        return request.GET.get('active-option', False)
+
+
+@hooks.register('register_admin_search_area')
+def register_custom_search_area():
+    return MyCustomSearchArea(
+        'My Search',
+        '/customsearch/',
+        classnames='icon icon-custom',
+        attrs={'is-custom': 'true'},
+        order=10000)
+
+
+class FooLinkHandler(object):
+    @staticmethod
+    def get_db_attributes(tag):
+        return {'foo': tag.attrs['data-foo']}
+
+    @staticmethod
+    def expand_db_attributes(attrs, for_editor):
+        new_attrs = {'href': 'http://example.com/{}/'.format(attrs['foo'])}
+        if for_editor:
+            new_attrs.update({
+                'data-foo': attrs['foo'],
+                'data-linktype': 'foo',
+            })
+        return '<a{}>'.format(flatatt(new_attrs))
+
+
+# RemovedInWagtail16Warning
+@hooks.register('register_rich_text_link_handler')
+def register_foo_link_handler():
+    return ('foo', FooLinkHandler())

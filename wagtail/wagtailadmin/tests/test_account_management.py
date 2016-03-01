@@ -1,6 +1,6 @@
 from __future__ import unicode_literals
 
-from django.test import TestCase
+from django.test import TestCase, override_settings
 from django.core.urlresolvers import reverse
 from django.contrib.auth import get_user_model
 from django.contrib.auth.models import Group, Permission
@@ -48,7 +48,10 @@ class TestAuthentication(TestCase, WagtailTestUtils):
 
         # Check that the user was logged in
         self.assertTrue('_auth_user_id' in self.client.session)
-        self.assertEqual(str(self.client.session['_auth_user_id']), str(get_user_model().objects.get(username='test').id))
+        self.assertEqual(
+            str(self.client.session['_auth_user_id']),
+            str(get_user_model().objects.get(username='test').id)
+        )
 
     def test_already_logged_in_redirect(self):
         """
@@ -136,7 +139,7 @@ class TestAccountSection(TestCase, WagtailTestUtils):
 
     def test_account_view(self):
         """
-        This tests that the login view responds with a login page
+        This tests that the accounts view responds with an index page
         """
         # Get account page
         response = self.client.get(reverse('wagtailadmin_account'))
@@ -144,6 +147,18 @@ class TestAccountSection(TestCase, WagtailTestUtils):
         # Check that the user recieved an account page
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'wagtailadmin/account/account.html')
+        # Page should contain a 'Change password' option
+        self.assertContains(response, "Change password")
+
+    @override_settings(WAGTAIL_PASSWORD_MANAGEMENT_ENABLED=False)
+    def test_account_view_with_password_management_disabled(self):
+        # Get account page
+        response = self.client.get(reverse('wagtailadmin_account'))
+
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'wagtailadmin/account/account.html')
+        # Page should NOT contain a 'Change password' option
+        self.assertNotContains(response, "Change password")
 
     def test_change_password_view(self):
         """
@@ -155,6 +170,18 @@ class TestAccountSection(TestCase, WagtailTestUtils):
         # Check that the user recieved a change password page
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'wagtailadmin/account/change_password.html')
+
+    @override_settings(WAGTAIL_PASSWORD_MANAGEMENT_ENABLED=False)
+    def test_change_password_view_disabled(self):
+        """
+        This tests that the change password view responds with a 404
+        when setting WAGTAIL_PASSWORD_MANAGEMENT_ENABLED is False
+        """
+        # Get change password page
+        response = self.client.get(reverse('wagtailadmin_account_change_password'))
+
+        # Check that the user recieved a 404
+        self.assertEqual(response.status_code, 404)
 
     def test_change_password_view_post(self):
         """
@@ -263,7 +290,11 @@ class TestAccountManagementForAdminOnlyUser(TestCase, WagtailTestUtils):
         admin_only_group = Group.objects.create(name='Admin Only')
         admin_only_group.permissions.add(Permission.objects.get(codename='access_admin'))
 
-        self.admin_only_user = get_user_model().objects.create_user('admin_only_user', 'admin_only_user@example.com', 'password')
+        self.admin_only_user = get_user_model().objects.create_user(
+            'admin_only_user',
+            'admin_only_user@example.com',
+            'password'
+        )
         self.admin_only_user.groups.add(admin_only_group)
 
         self.client.login(username=self.admin_only_user.username, password='password')

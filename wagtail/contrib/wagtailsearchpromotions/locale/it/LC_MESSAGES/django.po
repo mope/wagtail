@@ -9,9 +9,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Wagtail\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-08-26 14:46+0100\n"
-"PO-Revision-Date: 2015-08-26 14:14+0000\n"
-"Last-Translator: Karl Hobley <karl@torchbox.com>\n"
+"POT-Creation-Date: 2015-12-17 13:54+0000\n"
+"PO-Revision-Date: 2015-12-17 14:02+0000\n"
+"Last-Translator: mattwestcott <matthew@torchbox.com>\n"
 "Language-Team: Italian (http://www.transifex.com/torchbox/wagtail/language/"
 "it/)\n"
 "MIME-Version: 1.0\n"
@@ -24,12 +24,6 @@ msgid "Please specify at least one recommendation for this search term."
 msgstr ""
 "Si prega di specificare almeno una raccomandazione per questo termine di "
 "ricerca."
-
-msgid "Page"
-msgstr "Pagina"
-
-msgid "Description"
-msgstr "Descrizione"
 
 msgid ""
 "\n"
@@ -119,9 +113,6 @@ msgstr "Risultati promozionati"
 msgid "Views (past week)"
 msgstr "Viste (scorsa settimana)"
 
-msgid "Edit this pick"
-msgstr "Modifica questa scelta"
-
 msgid "None"
 msgstr "Nessuno"
 
@@ -148,6 +139,9 @@ msgid "Sorry, no promoted results match \"<em>%(query_string)s</em>\""
 msgstr ""
 "Spiacente, nessun risultato promozionato corrispondente a \"<em>"
 "%(query_string)s</em>\""
+
+msgid "Search promoted results"
+msgstr "Cerca risultati sponsorizzati"
 
 #, python-brace-format
 msgid "Editor's picks for '{0}' created."

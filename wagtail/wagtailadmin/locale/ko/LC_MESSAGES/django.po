@@ -4,13 +4,14 @@
 #
 # Translators:
 # Ji Han Chung <jihanchung20@gmail.com>, 2015
+# Kyungil Choi <hanpama@gmail.com>, 2015
 msgid ""
 msgstr ""
 "Project-Id-Version: Wagtail\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-08-26 14:28+0100\n"
-"PO-Revision-Date: 2015-08-26 13:37+0000\n"
-"Last-Translator: Karl Hobley <karl@torchbox.com>\n"
+"POT-Creation-Date: 2015-12-17 13:54+0000\n"
+"PO-Revision-Date: 2015-12-17 13:57+0000\n"
+"Last-Translator: mattwestcott <matthew@torchbox.com>\n"
 "Language-Team: Korean (http://www.transifex.com/torchbox/wagtail/language/"
 "ko/)\n"
 "MIME-Version: 1.0\n"
@@ -36,7 +37,7 @@ msgstr "패스워드 입력"
 
 #, python-format
 msgid "Enter your %s"
-msgstr "당신의 %s 입력"
+msgstr "%s 입력"
 
 msgid "Enter your email address to reset your password"
 msgstr "비밀번호 재설정을 위한 당신의 이메일을 적어주세요"
@@ -237,6 +238,12 @@ msgstr "링크 삽입"
 msgid "Add an external link"
 msgstr "외부 링크 추가"
 
+msgid "Yes, delete"
+msgstr "네, 지우겠습니다"
+
+msgid "Save"
+msgstr "저장"
+
 #, python-format
 msgid "Welcome to the %(site_name)s Wagtail CMS"
 msgstr "%(site_name)s 와그테일 CMS에 오신 것을 환영합니다"
@@ -348,10 +355,6 @@ msgstr "여기서 페이지를 수정할 수 있습니다"
 
 #, python-format
 msgid "The page \"%(page)s\" has been submitted for moderation"
-msgstr "검토를 위해 \"%(page)s\" 페이지가 제출 되었습니다"
-
-#, python-format
-msgid "The page \"%(page)s\" has been submitted for moderation."
 msgstr "검토를 위해 \"%(page)s\" 페이지가 제출 되었습니다"
 
 msgid "You can preview the page here:"
@@ -486,8 +489,8 @@ msgstr "새로운 %(page_type)s"
 msgid "New"
 msgstr "새로운"
 
-msgid "Save as draft"
-msgstr "초안으로 저장"
+msgid "Save draft"
+msgstr "초안 저장"
 
 msgid "Publish"
 msgstr "퍼블리싱"
@@ -506,9 +509,6 @@ msgstr "%(page_type)s <span>%(title)s</span> 수정"
 msgid "Page locked"
 msgstr "페이지 잠금"
 
-msgid "Save draft"
-msgstr "초안 저장"
-
 #, python-format
 msgid "Last modified: %(last_mod)s"
 msgstr "마지막 수정: %(last_mod)s"
@@ -526,6 +526,13 @@ msgstr "끌기"
 
 msgid "Updated"
 msgstr "업데이트된"
+
+msgid "No pages have been created at this location."
+msgstr "해당 위치에 생성된 페이지가 없습니다."
+
+#, python-format
+msgid "Why not <a href=\"%(add_page_url)s\">create one</a>?"
+msgstr "<a href=\"%(add_page_url)s\">하나 생성</a> 하시는 건 어떨까요?"
 
 msgid "This page is locked to further editing"
 msgstr "이 페이지는 추가 수정을 위해 잠겼습니다"
@@ -558,6 +565,15 @@ msgstr ""
 msgid "Add child page"
 msgstr "하위 페이지 추가"
 
+#, python-format
+msgid ""
+"\n"
+"        Page %(page_number)s of %(num_pages)s.\n"
+"    "
+msgstr ""
+"\n"
+"%(num_pages)s 의 %(page_number)s 페이지"
+
 msgid "Previous"
 msgstr "이전"
 
@@ -584,17 +600,18 @@ msgstr "%(title)s 를 위한 새로운 상위페이지 선택"
 msgid "Select a new parent page for <span>%(title)s</span>"
 msgstr "<span>%(title)s</span>  를 위한 새로운 상위페이지 선택"
 
-msgid "Other searches"
-msgstr "다른 검색결과들"
-
-msgid "Images"
-msgstr "사진"
-
-msgid "Documents"
-msgstr "문서"
-
-msgid "Users"
-msgstr "사용자"
+#, python-format
+msgid ""
+"\n"
+"                There is one matching page\n"
+"            "
+msgid_plural ""
+"\n"
+"                There are %(counter)s matching pages\n"
+"            "
+msgstr[0] ""
+"\n"
+"%(counter)s 개의 연관된 페이지가 있습니다"
 
 #, python-format
 msgid "Sorry, no pages match <em>\"%(query_string)s\"</em>"
@@ -681,6 +698,9 @@ msgstr "로그아웃"
 msgid "Page %(page_num)s of %(total_pages)s."
 msgstr "%(total_pages)s 중의 %(page_num)s 페이지"
 
+msgid "Other searches"
+msgstr "다른 검색결과들"
+
 msgid ""
 "You are using an <strong>outdated</strong> browser not supported by this "
 "software. Please <a href=\"http://browsehappy.com/\">upgrade your browser</"
@@ -705,6 +725,9 @@ msgstr "하위페이지 추가"
 
 msgid "Add"
 msgstr "추가"
+
+msgid "Sorry, you do not have permission to access this area."
+msgstr "죄송합니다, 해당 영역에 접근할 권한이 없습니다."
 
 msgid "Your password has been changed successfully!"
 msgstr "당신의 비밀번호가 성공적으로 변경 되었습니다"

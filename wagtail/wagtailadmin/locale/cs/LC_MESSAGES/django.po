@@ -3,14 +3,15 @@
 # This file is distributed under the same license as the PACKAGE package.
 #
 # Translators:
+# Ivan Pomykacz <mist@alastify.cz>, 2015
 # Jiri Stepanek <stepiiicz@gmail.com>, 2015
 msgid ""
 msgstr ""
 "Project-Id-Version: Wagtail\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-08-26 14:28+0100\n"
-"PO-Revision-Date: 2015-08-26 13:37+0000\n"
-"Last-Translator: Karl Hobley <karl@torchbox.com>\n"
+"POT-Creation-Date: 2015-12-17 13:54+0000\n"
+"PO-Revision-Date: 2015-12-17 13:57+0000\n"
+"Last-Translator: mattwestcott <matthew@torchbox.com>\n"
 "Language-Team: Czech (http://www.transifex.com/torchbox/wagtail/language/"
 "cs/)\n"
 "MIME-Version: 1.0\n"
@@ -316,10 +317,6 @@ msgstr "Stránku můžete upravit zde:"
 msgid "The page \"%(page)s\" has been submitted for moderation"
 msgstr "Stránka \"%(page)s\" byla odeslána ke schválení"
 
-#, python-format
-msgid "The page \"%(page)s\" has been submitted for moderation."
-msgstr "Stránka \"%(page)s\" byla odeslána ke schválení."
-
 msgid "You can preview the page here:"
 msgstr "Náhled stránky můžete zobrazit zde:"
 
@@ -459,7 +456,7 @@ msgstr "Nový %(page_type)s"
 msgid "New"
 msgstr "Nový"
 
-msgid "Save as draft"
+msgid "Save draft"
 msgstr "Uložit koncept"
 
 msgid "Publish"
@@ -470,9 +467,6 @@ msgstr "Odeslat ke schválení"
 
 msgid "Page locked"
 msgstr "Stránka uzamčena"
-
-msgid "Save draft"
-msgstr "Uložit koncept"
 
 #, python-format
 msgid "Last modified: %(last_mod)s"
@@ -492,8 +486,19 @@ msgstr "Přetáhnout myší"
 msgid "Updated"
 msgstr "Uloženo"
 
+msgid "No pages have been created at this location."
+msgstr "V tomto umístění nebyly zatím vytvořeny žádné stránky."
+
+#, python-format
+msgid "Why not <a href=\"%(add_page_url)s\">create one</a>?"
+msgstr "<a href=\"%(add_page_url)s\">Založit</a> novou stránku."
+
 msgid "This page is locked to further editing"
 msgstr "Tato stránka je uzamčena pro další úpravy"
+
+#, python-format
+msgid "Explore subpages of '%(title)s'"
+msgstr "Prozkoumat podstránky '%(title)s'"
 
 msgid "Explore"
 msgstr "Prozkoumat"
@@ -511,6 +516,15 @@ msgstr "Přidat podstránku"
 
 msgid "Add child page"
 msgstr "Přidat podstránku"
+
+#, python-format
+msgid ""
+"\n"
+"        Page %(page_number)s of %(num_pages)s.\n"
+"    "
+msgstr ""
+"\n"
+"Strana %(page_number)s / %(num_pages)s."
 
 msgid "Previous"
 msgstr "Předchozí"
@@ -538,17 +552,24 @@ msgstr "Zvolte novou nadřazenou stránku pro %(title)s"
 msgid "Select a new parent page for <span>%(title)s</span>"
 msgstr "Zvolte novou nadřazenou stránku pro <span>%(title)s</span>"
 
-msgid "Other searches"
-msgstr "Další hledání"
-
-msgid "Images"
-msgstr "Obrázky"
-
-msgid "Documents"
-msgstr "Dokumenty"
-
-msgid "Users"
-msgstr "Uživatelé"
+#, python-format
+msgid ""
+"\n"
+"                There is one matching page\n"
+"            "
+msgid_plural ""
+"\n"
+"                There are %(counter)s matching pages\n"
+"            "
+msgstr[0] ""
+"\n"
+"Nalezena jedna shoda"
+msgstr[1] ""
+"\n"
+"Celkem vyhovujících stran: %(counter)s"
+msgstr[2] ""
+"\n"
+"Celkem vyhovujících stran: %(counter)s"
 
 #, python-format
 msgid "Sorry, no pages match <em>\"%(query_string)s\"</em>"
@@ -634,6 +655,9 @@ msgstr "Odhlásit"
 #, python-format
 msgid "Page %(page_num)s of %(total_pages)s."
 msgstr "Strana %(page_num)s z %(total_pages)s."
+
+msgid "Other searches"
+msgstr "Další hledání"
 
 msgid "User bar"
 msgstr "Uživatelská lišta"

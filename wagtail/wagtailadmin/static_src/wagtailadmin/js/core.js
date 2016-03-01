@@ -21,6 +21,21 @@ function escapeHtml(text) {
     });
 }
 
+function initTagField(id, autocompleteUrl) {
+    $('#' + id).tagit({
+        autocomplete: {source: autocompleteUrl},
+        preprocessTag: function(val) {
+            // Double quote a tag if it contains a space
+            // and if it isn't already quoted.
+            if (val && val[0] != '"' && val.indexOf(' ') > -1) {
+                return '"' + val + '"';
+            }
+
+            return val;
+        }
+    });
+}
+
 $(function() {
     // Add class to the body from which transitions may be hung so they don't appear to transition as the page loads
     $('body').addClass('ready');
@@ -74,19 +89,28 @@ $(function() {
         $('.tab-nav a[href="' + $(this).attr('href') + '"]').click();
     });
 
-    $('.dropdown-toggle').bind('click', function() {
-        $(this).closest('.dropdown').toggleClass('open');
+    $('.dropdown').each(function() {
+        var $dropdown = $(this);
 
-        // Stop event propagating so the "close all dropdowns on body clicks" code (below) doesn't immediately close the dropdown
-        return false;
-    });
+        $('.dropdown-toggle', $dropdown).on('click', function(e) {
+            e.stopPropagation();
+            $dropdown.toggleClass('open');
 
-    /* close all dropdowns on body clicks */
-    $(document).on('click', function(e) {
-        var relTarg = e.relatedTarget || e.toElement;
-        if (!$(relTarg).hasClass('dropdown-toggle')) {
-            $('.dropdown').removeClass('open');
-        }
+            if ($dropdown.hasClass('open')) {
+                // If a dropdown is opened, add an event listener for document clicks to close it
+                $(document).on('click.dropdown.cancel', function(e) {
+                    var relTarg = e.relatedTarget || e.toElement;
+
+                    // Only close dropdown if the click target wasn't a child of this dropdown
+                    if (!$(relTarg).parents().is($dropdown)) {
+                        $dropdown.removeClass('open');
+                        $(document).off('click.dropdown.cancel');
+                    }
+                });
+            } else {
+                $(document).off('click.dropdown.cancel');
+            }
+        });
     });
 
     /* Dropzones */
@@ -183,3 +207,4 @@ $(function() {
         }, 10);
     });
 });
+
