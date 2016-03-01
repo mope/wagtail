@@ -1,7 +1,9 @@
+from django.conf import settings
 from django.conf.urls import include, url
 from django.core import urlresolvers
 from django.utils.translation import ugettext_lazy as _
 from django.contrib.auth.models import Permission
+from django.utils.html import format_html, format_html_join
 
 from wagtail.wagtailcore import hooks
 from wagtail.wagtailadmin.menu import MenuItem
@@ -27,6 +29,26 @@ class DocumentsMenuItem(MenuItem):
 @hooks.register('register_admin_menu_item')
 def register_documents_menu_item():
     return DocumentsMenuItem(_('Documents'), urlresolvers.reverse('wagtaildocs:index'), name='documents', classnames='icon icon-doc-full-inverse', order=400)
+
+
+@hooks.register('insert_editor_js')
+def editor_js():
+    js_files = [
+        'wagtaildocs/js/hallo-plugins/hallo-wagtaildoclink.js',
+        'wagtaildocs/js/document-chooser.js',
+    ]
+    js_includes = format_html_join('\n', '<script src="{0}{1}"></script>',
+        ((settings.STATIC_URL, filename) for filename in js_files)
+    )
+    return js_includes + format_html(
+        """
+        <script>
+            window.chooserUrls.documentChooser = '{0}';
+            registerHalloPlugin('hallowagtaildoclink');
+        </script>
+        """,
+        urlresolvers.reverse('wagtaildocs:chooser')
+    )
 
 
 @hooks.register('register_permissions')

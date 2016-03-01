@@ -8,8 +8,8 @@ function createDocumentChooser(id) {
         ModalWorkflow({
             url: window.chooserUrls.documentChooser,
             responses: {
-                documentChosen: function(docData) {
-                    input.val(docData.id);
+                linkChosen: function(docData) {
+                    input.val(docData.data.id);
                     docTitle.text(docData.title);
                     chooserElement.removeClass('blank');
                     editLink.attr('href', docData.edit_link);

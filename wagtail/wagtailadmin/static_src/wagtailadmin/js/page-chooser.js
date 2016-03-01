@@ -14,8 +14,8 @@ function createPageChooser(id, pageTypes, openAtParentId) {
             url: initialUrl,
             urlParams: { page_type: pageTypes.join(',') },
             responses: {
-                pageChosen: function(pageData) {
-                    input.val(pageData.id);
+                linkChosen: function(pageData) {
+                    input.val(pageData.data.id);
                     openAtParentId = pageData.parentId;
                     pageTitle.text(pageData.title);
                     chooserElement.removeClass('blank');
