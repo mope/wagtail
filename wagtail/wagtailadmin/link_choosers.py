@@ -61,7 +61,7 @@ class LinkChooser(object):
         """
         raise NotImplementedError()
 
-    @staticmethod
+    @classmethod
     def expand_db_attributes(cls, attrs, for_editor):
         """
         Given a dict of attributes from a link in some RichText stored in the
@@ -95,7 +95,6 @@ class InternalLinkChooser(LinkChooser):
         """
         return {'id': tag['data-id']}
 
-class SimpleLinkChooser(LinkChooser):
     @classmethod
     def expand_db_attributes(cls, attrs, for_editor):
         try:
