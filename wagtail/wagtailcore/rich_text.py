@@ -158,7 +158,7 @@ def expand_db_html(html, for_editor=False):
             pass
         else:
             attrs = handler.expand_db_attributes(attrs, for_editor)
-            if for_editor:
+            if attrs and for_editor:
                 attrs['data-linktype'] = handler.id
             return '<a{}>'.format(flatatt(attrs))
 

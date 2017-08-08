@@ -120,6 +120,11 @@ class TestExpandDbHtml(TestCase):
             expand_db_html('<a linktype="foo" foo="bar">baz</a>', for_editor=True),
             '<a href="http://example.com/bar/" data-linktype="foo" data-foo="bar">baz</a>')
 
+    def test_expand_db_html_no_page_for_editor(self):
+        html = '<a id="1000" linktype="page">foo</a>'
+        result = expand_db_html(html, for_editor=True)
+        self.assertEqual(result, '<a>foo</a>')
+
 
 class TestRichTextValue(TestCase):
     fixtures = ['test.json']
